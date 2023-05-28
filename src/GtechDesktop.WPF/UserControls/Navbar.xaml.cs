@@ -1,5 +1,4 @@
-﻿using GtechDesktop.WPF.UserControls;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,17 +13,22 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GtechDesktop.WPF
+namespace GtechDesktop.WPF.UserControls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Navbar.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Navbar : UserControl
     {
-        public MainWindow()
+        public Navbar()
         {
             InitializeComponent();
-            MainContent.Content = new Home();
+        }
+
+        private void NavigateToMainWindow(object sender, MouseButtonEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MainWindow;
+            mainWindow.MainContent.Content = new Home();
         }
     }
 }
