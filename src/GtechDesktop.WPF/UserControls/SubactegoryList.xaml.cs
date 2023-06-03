@@ -1,7 +1,5 @@
 ﻿using GtechDesktop.WPF.Models;
-using GtechDesktop.WPF.Repositories;
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,17 +12,23 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace GtechDesktop.WPF.UserControls
 {
     /// <summary>
-    /// Interaction logic for Home.xaml
+    /// Interaction logic for SubactegoryList.xaml
     /// </summary>
-    public partial class Home : UserControl
+    public partial class SubactegoryList : UserControl
     {
-        public Home()
+        public SubactegoryList(Subcategory subcategory)
         {
             InitializeComponent();
+
+            foreach(var paremeter in subcategory.ParametersPatten)
+            {
+                MessageBox.Show(paremeter, "1", MessageBoxButton.OK);
+            }
         }
     }
 }

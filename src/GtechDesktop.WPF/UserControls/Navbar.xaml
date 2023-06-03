@@ -7,24 +7,33 @@
              mc:Ignorable="d" 
              d:DesignHeight="80"
              d:DesignWidth="1000">
-    <Grid Background="#f8f9fa">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.8*"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    <Grid x:Name="NavbarGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" BorderThickness="0,0,0,1" BorderBrush="Gray">
+            <Grid Background="#f8f9fa">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-        <Image Source="/Images/g-tech_logo.png" Grid.Column="0" MouseLeftButtonDown="NavigateToMainWindow" Cursor="Hand"/>
-        <TextBox x:Name="searchBar" Grid.Column="1" VerticalAlignment="Center" FontSize="18" Background="#f8f9fa"/>
-        <Button x:Name="userButton" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Zaloguj się" Background="Transparent" BorderThickness="0" FontSize="16" Cursor="Hand"/>
-        <Grid Grid.Column="3" VerticalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="favButton" Content="Ulubione" Grid.Column="0" Background="Transparent" BorderThickness="0" FontSize="16" Cursor="Hand"/>
-            <Button x:Name="cartButton" Content="Koszyk" Grid.Column="1" Background="Transparent" BorderThickness="0" FontSize="16" Cursor="Hand"/>
-        </Grid>
+                <Image Source="/Images/g-tech_logo.png" Grid.Column="0" MouseLeftButtonDown="NavigateToHomeWindow" Cursor="Hand"/>
+                <TextBox x:Name="searchBar" Grid.Column="1" VerticalAlignment="Center" FontSize="18" Background="#f8f9fa"/>
+                <Button x:Name="userButton" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Zaloguj się" Background="Transparent" BorderThickness="0" FontSize="16" Cursor="Hand" Click="UserButtonClick"/>
+                <Grid Grid.Column="3" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="favButton" Content="Ulubione" Grid.Column="0" Background="Transparent" BorderThickness="0" FontSize="16" Cursor="Hand"/>
+                    <Button x:Name="cartButton" Content="Koszyk" Grid.Column="1" Background="Transparent" BorderThickness="0" FontSize="16" Cursor="Hand"/>
+                </Grid>
+            </Grid>
+        </Border>
+        <Grid x:Name="categoriesBar" Grid.Row="1" Background="#f8f9fa" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>

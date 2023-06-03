@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GtechDesktop.WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="1600">
+        Title="G-tech Desktop" Height="900" Width="1600">
     <ContentControl x:Name="MainContent">
     </ContentControl>
 </Window>
