@@ -1,0 +1,55 @@
+﻿<Window x:Class="GtechDesktop.WPF.Windows.AdminWindows.AddProductWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GtechDesktop.WPF.Windows.AdminWindows"
+        mc:Ignorable="d"
+        Title="AddProductWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Dodaj produkt" Grid.Row="0" Grid.Column="0" FontSize="18" FontWeight="Bold" VerticalContentAlignment="Center"/>
+        <Button Content="Dodaj produkt" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10,5" Margin="0,0,20,0" FontSize="13" Background="#0077b6" Foreground="White" BorderBrush="#0077b6"/>
+        <ComboBox x:Name="CategoriesCmbBox" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" SelectionChanged="UpdateSubcategories"/>
+        <ComboBox x:Name="SubcategoriesCmbBox" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" SelectionChanged="UpdateParameters"/>
+
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Dodaj zdjęcie" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5,3" Background="#0077b6" Foreground="White" BorderBrush="#0077b6" Click="AddImageButtonClick"/>
+            <Label Content="Nazwa: " Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Label Content="Cena: " Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Label Content="Ilość: " Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Label Content="Producent: " Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+            <Label x:Name="ImageUrlLabel" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBox x:Name="NameTxt" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Width="150"/>
+            <TextBox x:Name="PrizeTxt" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Width="150"/>
+            <TextBox x:Name="AmountTxt" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Width="150"/>
+            <ComboBox x:Name="ProducerCmbBox" SelectionChanged="ProducerSelectionChanged" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Width="150"/>
+        </Grid>
+        <Grid Grid.Row="2" Grid.Column="1" x:Name="ParametersGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
+    </Grid>
+</Window>
