@@ -19,6 +19,28 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+
+            <Label x:Name="SubacategoryName" FontSize="18"/>
+            <ListView x:Name="ProductBox" Grid.Row="1" VerticalAlignment="Top" BorderThickness="0">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="4" HorizontalAlignment="Stretch"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="auto">
+                            <Image Source="{Binding BitmapImage}" Height="150"/>
+                            <Label Content="{Binding Name}" FontSize="16" Foreground="#0077b6" FontWeight="DemiBold"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{Binding Price}" FontSize="18"/>
+                                <Label Content="zł" FontSize="18"/>
+                                <Button Content="Zobacz więcej" FontSize="16" Foreground="White" Background="#0077b6" BorderBrush="#0077b6" Padding="3" CommandParameter="{Binding .}" Click="MoreDetailsButtonClicked"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>        
     </Grid>
 </UserControl>

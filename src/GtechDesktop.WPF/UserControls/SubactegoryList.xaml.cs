@@ -1,6 +1,8 @@
 ﻿using GtechDesktop.WPF.Models;
+using GtechDesktop.WPF.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace GtechDesktop.WPF.UserControls
 {
@@ -25,10 +27,17 @@ namespace GtechDesktop.WPF.UserControls
         {
             InitializeComponent();
 
-            foreach(var paremeter in subcategory.ParametersPatten)
-            {
-                MessageBox.Show(paremeter, "1", MessageBoxButton.OK);
-            }
+            SubacategoryName.Content = subcategory.Name;
+            var products = ProductRepository.GetProductFromSubactegory(subcategory.Id);
+            foreach (var product in products)
+                product.BitmapImage = new BitmapImage(new Uri(Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..")) + product.Image));
+                   
+            ProductBox.ItemsSource = products;
+        }
+
+        private void MoreDetailsButtonClicked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

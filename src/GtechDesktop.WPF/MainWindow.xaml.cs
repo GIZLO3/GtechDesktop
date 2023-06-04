@@ -1,4 +1,5 @@
-﻿using GtechDesktop.WPF.UserControls;
+﻿using GtechDesktop.WPF.Repositories;
+using GtechDesktop.WPF.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -2,6 +2,7 @@
 using GtechDesktop.WPF.Windows;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,8 @@ namespace GtechDesktop.WPF.UserControls
             App.LoggedUser = null;
             if(App.adminMainWindow != null)
                 App.adminMainWindow.Close();
+
+            File.Delete(App.GtechLoggedUserJsonFilePath);
             App.NavigateToHomeWindow();
         }
 

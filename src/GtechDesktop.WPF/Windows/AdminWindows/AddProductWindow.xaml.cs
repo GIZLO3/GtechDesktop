@@ -1,4 +1,5 @@
-﻿using GtechDesktop.WPF.Repositories;
+﻿using GtechDesktop.WPF.Models;
+using GtechDesktop.WPF.Repositories;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -22,11 +23,12 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
     /// </summary>
     public partial class AddProductWindow : Window
     {
-        private int CategoryId;
         private int SubcategoryId;
         private int ProducerId;
         private string ImageSource;
-        private List<TextBox> parametersTextBoxes = new List<TextBox>();
+        private string ImageFileName;
+        private string ImageSafeFileName;
+        private Dictionary<string, TextBox> parametersTextBoxes = new Dictionary<string, TextBox>();
         public AddProductWindow()
         {
             InitializeComponent();
@@ -48,8 +50,8 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
             var selectedItem = ((ComboBox)sender).SelectedItem as string;
             if(selectedItem != null)
             {
-                CategoryId = int.Parse(selectedItem.Split(';')[0]);
-                var subcategories = SubcategoryRepository.GetSubcategoriesByCategoryId(CategoryId);
+                var categoryId = int.Parse(selectedItem.Split(';')[0]);
+                var subcategories = SubcategoryRepository.GetSubcategoriesByCategoryId(categoryId);
                 var subcategoryIdName = new List<string>();
                 subcategories.ForEach(subcategory => subcategoryIdName.Add(subcategory.Id + ";" + subcategory.Name));
                 SubcategoriesCmbBox.ItemsSource = subcategoryIdName;
@@ -63,7 +65,7 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
             var producersIdName = new List<string>();
             producers.ForEach(producer => producersIdName.Add(producer.Id + ";" + producer.Name));
             ProducerCmbBox.ItemsSource = producersIdName;
-            ProducerCmbBox.SelectedIndex = 0;
+            ProducerCmbBox.SelectedIndex = producersIdName.Count()-1;
         }
 
         private void ProducerSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -95,8 +97,11 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
                         var stackPanel = new StackPanel();
                         var textBox = new TextBox();
                         var label = new Label();
-                        label.Content = parameters[parameterIndex++] + ": ";
+                        label.Content = parameters[parameterIndex] + ": ";
                         label.FontWeight = FontWeights.Bold;
+                        //textBox.SetValue(FrameworkElement.NameProperty, parameters[parameterIndex]);
+                        parametersTextBoxes.Add(parameters[parameterIndex], textBox);
+                        parameterIndex++;
 
                         stackPanel.SetValue(Grid.RowProperty, i);
                         stackPanel.SetValue(Grid.ColumnProperty, j);
@@ -106,8 +111,6 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
                         stackPanel.Children.Add(textBox);
 
                         ParametersGrid.Children.Add(stackPanel);
-
-                        parametersTextBoxes.Add(textBox);
                     }
                 }
             }
@@ -122,11 +125,53 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
               "Portable Network Graphic (*.png)|*.png";
             if(dialog.ShowDialog() == true)
             {
-                var newDirectory = Path.Combine(@"..\..\..\Images", dialog.SafeFileName);
-                File.Copy(dialog.FileName, newDirectory, true);
+                ImageFileName = dialog.FileName;
+                ImageSafeFileName = dialog.SafeFileName;
                 ImageSource = Path.Combine(@"\Images", dialog.SafeFileName);
-                ImageUrlLabel.Content = ImageSource;
+                Image.Source = new BitmapImage(new Uri(ImageFileName));
             }    
+        }
+
+        private void AddProductButtonClick(object sender, RoutedEventArgs e)
+        {
+            if(string.IsNullOrEmpty(NameTxt.Text) || string.IsNullOrEmpty(PriceTxt.Text) || string.IsNullOrEmpty(AmountTxt.Text))
+            {
+                MessageBox.Show("Uzupełnij wszytkie pola po lewej stonie!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if(PriceTxt.Text.All(char.IsDigit) && AmountTxt.Text.All(char.IsDigit))
+            {
+                var product = new Product();
+                product.Name = NameTxt.Text;
+                product.Price = decimal.Parse(PriceTxt.Text);
+                product.Amount = int.Parse(AmountTxt.Text);
+                var newDirectory = Path.Combine(@"..\..\..\Images", ImageSafeFileName);
+                File.Copy(ImageFileName, newDirectory);
+                product.Image = product.Image = ImageSource;
+
+                var properties = new Dictionary<string, string>();
+                var keys = parametersTextBoxes.Keys;
+                foreach (var key in keys)
+                {
+                    properties.Add(key, parametersTextBoxes[key].Text);
+                }
+                product.Propeties = properties;
+
+                product.ProducerId = ProducerId;
+                product.SubcategoryId = SubcategoryId;
+
+                ProductRepository.InsertProduct(product);
+                MessageBox.Show("Dodano produkt!", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+                Close();
+            }
+            else
+                MessageBox.Show("Cena lub ilośc jest niepoprawna!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private void AddProducerButtonClick(object sender, RoutedEventArgs e)
+        {
+            var addProducerWindow = new AddProducer();
+            addProducerWindow.ShowDialog();
+            GetProducers();
         }
     }
 }

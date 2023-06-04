@@ -17,7 +17,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Label Content="Dodaj produkt" Grid.Row="0" Grid.Column="0" FontSize="18" FontWeight="Bold" VerticalContentAlignment="Center"/>
-        <Button Content="Dodaj produkt" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10,5" Margin="0,0,20,0" FontSize="13" Background="#0077b6" Foreground="White" BorderBrush="#0077b6"/>
+        <Button Content="Dodaj produkt" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10,5" Margin="0,0,20,0" FontSize="13" Background="#0077b6" Foreground="White" BorderBrush="#0077b6" Click="AddProductButtonClick"/>
         <ComboBox x:Name="CategoriesCmbBox" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" SelectionChanged="UpdateSubcategories"/>
         <ComboBox x:Name="SubcategoriesCmbBox" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" SelectionChanged="UpdateParameters"/>
 
@@ -39,11 +39,14 @@
             <Label Content="Ilość: " Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <Label Content="Producent: " Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-            <Label x:Name="ImageUrlLabel" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Image x:Name="Image" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <TextBox x:Name="NameTxt" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Width="150"/>
-            <TextBox x:Name="PrizeTxt" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Width="150"/>
+            <TextBox x:Name="PriceTxt" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Width="150"/>
             <TextBox x:Name="AmountTxt" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Width="150"/>
-            <ComboBox x:Name="ProducerCmbBox" SelectionChanged="ProducerSelectionChanged" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Width="150"/>
+            <StackPanel Grid.Row="4" Grid.Column="1" VerticalAlignment="Center">
+                <ComboBox x:Name="ProducerCmbBox" SelectionChanged="ProducerSelectionChanged" Width="150"/>
+                <Button Content="Dodaj producenta" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5,3" Margin="4" Background="#0077b6" Foreground="White" BorderBrush="#0077b6" Click="AddProducerButtonClick"/>
+            </StackPanel>
         </Grid>
         <Grid Grid.Row="2" Grid.Column="1" x:Name="ParametersGrid">
             <Grid.ColumnDefinitions>

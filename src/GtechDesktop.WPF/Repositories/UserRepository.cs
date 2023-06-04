@@ -40,7 +40,6 @@ namespace GtechDesktop.WPF.Repositories
         {
             App.Connection.Open();
             var insertCommand = new SqlCommand("INSERT INTO [gtech].[dbo].[user] VALUES(@Login, @Username, @Password, @Salt, @Email, @IsAdmin)", App.Connection);
-            insertCommand.CommandType = CommandType.Text;
             insertCommand.Parameters.AddWithValue("@Login", user.Login);
             insertCommand.Parameters.AddWithValue("@Username", user.Username);
             insertCommand.Parameters.AddWithValue("@Password", user.Password);

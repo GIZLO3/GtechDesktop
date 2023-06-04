@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,16 @@ namespace GtechDesktop.WPF.Repositories
             }
             App.Connection.Close();
             return producers;
+        }
+
+        public static int InsertProducer(Producer producer)
+        {
+            App.Connection.Open();
+            var insertCommand = new SqlCommand("INSERT INTO [gtech].[dbo].[producer] VALUES(@Name)", App.Connection);
+            insertCommand.Parameters.AddWithValue("@Name", producer.Name);
+            var id = insertCommand.ExecuteNonQuery();
+            App.Connection.Close();
+            return id;
         }
     }
 }

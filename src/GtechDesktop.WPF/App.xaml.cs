@@ -5,6 +5,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Security.Policy;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using GtechDesktop.WPF.Models;
@@ -23,8 +24,23 @@ namespace GtechDesktop.WPF
     {
         public static SqlConnection Connection = new SqlConnection(@"Data Source=(localdb)\Local;Initial Catalog=gtech;Integrated Security=True");
         public static User? LoggedUser;
+        public static string GtechLoggedUserJsonFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "gtechLoggedUser.json");
         public static AdminMainWindow? adminMainWindow;
-        private static MainWindow mainWindow = (MainWindow)Application.Current.MainWindow;
+        private static MainWindow? mainWindow;
+
+        private void App_Startup(object sender, StartupEventArgs e)
+        {
+            if (File.Exists(GtechLoggedUserJsonFilePath))
+            {
+                using StreamReader streamReader = new(GtechLoggedUserJsonFilePath);
+                var json = streamReader.ReadToEnd();
+                LoggedUser = JsonSerializer.Deserialize<User>(json);
+            }
+
+            Application.Current.MainWindow = new MainWindow();
+            Application.Current.MainWindow.Show();
+            mainWindow = (MainWindow)Application.Current.MainWindow;
+        }
 
         public static void NavigateToHomeWindow()
         {  
