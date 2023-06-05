@@ -11,6 +11,25 @@ namespace GtechDesktop.WPF.Repositories
 {
     public class ProducerRepository
     {
+        public static Producer GetProducer(int producerId)
+        {
+            App.Connection.Open();
+            var producer = new Producer();
+            var getCommand = new SqlCommand("SELECT * FROM [gtech].[dbo].[producer] WHERE ProducerId=@PRoducerId", App.Connection);
+            getCommand.Parameters.AddWithValue("@ProducerId", producerId);
+
+            using (var dataReader = getCommand.ExecuteReader())
+            {
+                while (dataReader.Read())
+                {
+                    producer.Id = dataReader.GetInt32(0);
+                    producer.Name = dataReader.GetString(1);
+                }
+            }
+            App.Connection.Close();
+            return producer;
+        }
+
         public static List<Producer> GetAllProducers()
         {
             App.Connection.Open();

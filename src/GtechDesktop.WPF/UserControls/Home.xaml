@@ -9,7 +9,7 @@
              d:DesignHeight="900" d:DesignWidth="1600">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="90"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 

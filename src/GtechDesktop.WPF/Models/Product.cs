@@ -14,7 +14,7 @@ namespace GtechDesktop.WPF.Models
         public decimal Price { get; set; }
         public int Amount { get; set; }
         public string? Image { get; set; }
-        public Dictionary<string, string>? Propeties { get; set; }
+        public Dictionary<string, string>? Properties { get; set; }
         public int ProducerId { get; set; }
         public int SubcategoryId { get; set; }
         public BitmapImage? BitmapImage { get; set; }

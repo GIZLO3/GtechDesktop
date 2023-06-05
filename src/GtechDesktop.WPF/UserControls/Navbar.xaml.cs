@@ -117,5 +117,11 @@ namespace GtechDesktop.WPF.UserControls
                 App.NavigateToUserDetailsWindow();
             }
         }
+
+        private void CartButtonClick(object sender, RoutedEventArgs e)
+        {
+            var cartWindow = new CartWindow();
+            cartWindow.ShowDialog();
+        }
     }
 }

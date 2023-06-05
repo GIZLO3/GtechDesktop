@@ -30,7 +30,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="favButton" Content="Ulubione" Grid.Column="0" Background="Transparent" BorderThickness="0" FontSize="16" Cursor="Hand"/>
-                    <Button x:Name="cartButton" Content="Koszyk" Grid.Column="1" Background="Transparent" BorderThickness="0" FontSize="16" Cursor="Hand"/>
+                    <Button x:Name="cartButton" Content="Koszyk" Grid.Column="1" Background="Transparent" BorderThickness="0" FontSize="16" Cursor="Hand" Click="CartButtonClick"/>
                 </Grid>
             </Grid>
         </Border>

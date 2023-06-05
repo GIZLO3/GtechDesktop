@@ -1,5 +1,6 @@
 ﻿using GtechDesktop.WPF.Models;
 using GtechDesktop.WPF.Repositories;
+using GtechDesktop.WPF.Windows;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,16 +29,15 @@ namespace GtechDesktop.WPF.UserControls
             InitializeComponent();
 
             SubacategoryName.Content = subcategory.Name;
-            var products = ProductRepository.GetProductFromSubactegory(subcategory.Id);
-            foreach (var product in products)
-                product.BitmapImage = new BitmapImage(new Uri(Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..")) + product.Image));
-                   
+            var products = ProductRepository.GetProductFromSubactegory(subcategory.Id);                
             ProductBox.ItemsSource = products;
         }
 
         private void MoreDetailsButtonClicked(object sender, RoutedEventArgs e)
         {
-
+            var product = ((Button)sender).CommandParameter as Product;
+            var productDetailsWindow = new ProductDetailsWindow(product);
+            productDetailsWindow.Show();
         }
     }
 }

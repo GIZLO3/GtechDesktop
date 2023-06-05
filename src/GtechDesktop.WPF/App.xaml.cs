@@ -23,8 +23,13 @@ namespace GtechDesktop.WPF
     public partial class App : Application
     {
         public static SqlConnection Connection = new SqlConnection(@"Data Source=(localdb)\Local;Initial Catalog=gtech;Integrated Security=True");
+        
         public static User? LoggedUser;
         public static string GtechLoggedUserJsonFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "gtechLoggedUser.json");
+        
+        public static Dictionary<int, CartProduct> Cart = new Dictionary<int, CartProduct>(); 
+        public static string GtechCartFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "gtechCart.json");
+
         public static AdminMainWindow? adminMainWindow;
         private static MainWindow? mainWindow;
 
@@ -35,6 +40,13 @@ namespace GtechDesktop.WPF
                 using StreamReader streamReader = new(GtechLoggedUserJsonFilePath);
                 var json = streamReader.ReadToEnd();
                 LoggedUser = JsonSerializer.Deserialize<User>(json);
+            }
+
+            if (File.Exists(GtechCartFilePath))
+            {
+                using StreamReader streamReader = new(GtechCartFilePath);
+                var json = streamReader.ReadToEnd();
+                Cart = JsonSerializer.Deserialize<Dictionary<int, CartProduct>>(json);
             }
 
             Application.Current.MainWindow = new MainWindow();

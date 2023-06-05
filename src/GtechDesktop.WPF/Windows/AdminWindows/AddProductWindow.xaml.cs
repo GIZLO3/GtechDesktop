@@ -77,6 +77,7 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
         private void UpdateParameters(object sender, SelectionChangedEventArgs e)
         {
             var selectedItem = ((ComboBox)sender).SelectedItem as string;
+            parametersTextBoxes = new Dictionary<string, TextBox>();
             if (selectedItem != null)
             {
                 SubcategoryId = int.Parse(selectedItem.Split(';')[0]);
@@ -154,7 +155,7 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
                 {
                     properties.Add(key, parametersTextBoxes[key].Text);
                 }
-                product.Propeties = properties;
+                product.Properties = properties;
 
                 product.ProducerId = ProducerId;
                 product.SubcategoryId = SubcategoryId;

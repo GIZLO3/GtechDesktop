@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -27,7 +27,7 @@
                         <UniformGrid Columns="4" HorizontalAlignment="Stretch"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-                <ListView.ItemTemplate>
+                <ListView.ItemTemplate> 
                     <DataTemplate>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="auto">
                             <Image Source="{Binding BitmapImage}" Height="150"/>
@@ -35,7 +35,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="{Binding Price}" FontSize="18"/>
                                 <Label Content="zł" FontSize="18"/>
-                                <Button Content="Zobacz więcej" FontSize="16" Foreground="White" Background="#0077b6" BorderBrush="#0077b6" Padding="3" CommandParameter="{Binding .}" Click="MoreDetailsButtonClicked"/>
+                                <Button Content="Zobacz więcej" FontSize="16" Foreground="White" Background="#0077b6" BorderBrush="#0077b6" Padding="5,2" Margin="10,0" CommandParameter="{Binding .}" VerticalAlignment="Center" Click="MoreDetailsButtonClicked"/>
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>

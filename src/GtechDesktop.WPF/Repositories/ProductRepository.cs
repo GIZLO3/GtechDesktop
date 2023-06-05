@@ -2,11 +2,13 @@
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace GtechDesktop.WPF.Repositories
 {
@@ -27,9 +29,10 @@ namespace GtechDesktop.WPF.Repositories
                     product.Price = dataReader.GetDecimal(2);
                     product.Amount = dataReader.GetInt32(3);
                     product.Image = Regex.Replace(dataReader.GetString(4), @"\s+", "");
-                    product.Propeties = JsonSerializer.Deserialize<Dictionary<string, string>>(dataReader.GetString(5));
+                    product.Properties = JsonSerializer.Deserialize<Dictionary<string, string>>(dataReader.GetString(5));
                     product.ProducerId = dataReader.GetInt32(6);
                     product.SubcategoryId = dataReader.GetInt32(7);
+                    product.BitmapImage = new BitmapImage(new Uri(Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..")) + product.Image));
                 }
             }
             App.Connection.Close();
@@ -53,9 +56,10 @@ namespace GtechDesktop.WPF.Repositories
                     product.Price = dataReader.GetDecimal(2);
                     product.Amount = dataReader.GetInt32(3);
                     product.Image = Regex.Replace(dataReader.GetString(4), @"\s+", "");
-                    product.Propeties = JsonSerializer.Deserialize<Dictionary<string, string>>(dataReader.GetString(5));
+                    product.Properties = JsonSerializer.Deserialize<Dictionary<string, string>>(dataReader.GetString(5));
                     product.ProducerId = dataReader.GetInt32(6);
                     product.SubcategoryId = dataReader.GetInt32(7);
+                    product.BitmapImage = new BitmapImage(new Uri(Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..")) + product.Image));
                     products.Add(product);
                 }
             }
@@ -80,15 +84,31 @@ namespace GtechDesktop.WPF.Repositories
                     product.Price = dataReader.GetDecimal(2);
                     product.Amount = dataReader.GetInt32(3);
                     product.Image = Regex.Replace(dataReader.GetString(4), @"\s+", "");
-                    product.Propeties = JsonSerializer.Deserialize<Dictionary<string, string>>(dataReader.GetString(5));
+                    product.Properties = JsonSerializer.Deserialize<Dictionary<string, string>>(dataReader.GetString(5));
                     product.ProducerId = dataReader.GetInt32(6);
                     product.SubcategoryId = dataReader.GetInt32(7);
+                    product.BitmapImage = new BitmapImage(new Uri(Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..")) + product.Image));
                     products.Add(product);
                 }
             }
             App.Connection.Close();
 
             return products;
+        }
+
+        public static int GetCurrentProductAmount(int productId)
+        {
+            App.Connection.Open();
+            var amount = 0;
+            var getCommand = new SqlCommand("SELECT Amount FROM [gtech].[dbo].[product] WHERE ProductId=@ProductId", App.Connection);
+            getCommand.Parameters.AddWithValue("@ProductId", productId);
+            using (var dataReader = getCommand.ExecuteReader())
+            {
+                if(dataReader.Read())
+                    amount = dataReader.GetInt32(0);
+            }
+            App.Connection.Close();
+            return amount;
         }
 
         public static int InsertProduct(Product product)
@@ -99,7 +119,7 @@ namespace GtechDesktop.WPF.Repositories
             insertCommand.Parameters.AddWithValue("@Price", product.Price);
             insertCommand.Parameters.AddWithValue("@Amount", product.Amount);
             insertCommand.Parameters.AddWithValue("@Image", product.Image);
-            insertCommand.Parameters.AddWithValue("@Properties", JsonSerializer.Serialize(product.Propeties));
+            insertCommand.Parameters.AddWithValue("@Properties", JsonSerializer.Serialize(product.Properties));
             insertCommand.Parameters.AddWithValue("@ProducerId", product.ProducerId);
             insertCommand.Parameters.AddWithValue("@SubcategoryId", product.SubcategoryId);
             var id = insertCommand.ExecuteNonQuery();
