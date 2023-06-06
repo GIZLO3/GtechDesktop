@@ -36,6 +36,32 @@ namespace GtechDesktop.WPF.Repositories
             return user;
         }
 
+        public static List<User> GetUsers()
+        {
+            App.Connection.Open();
+            var users = new List<User>();
+            var getCommand = new SqlCommand("SELECT * FROM [gtech].[dbo].[user] WHERE IsAdmin=0", App.Connection);
+            
+            using (var dataReader = getCommand.ExecuteReader())
+            {
+                while (dataReader.Read())
+                {
+                    var user = new User();
+                    user.Id = dataReader.GetInt32(0);
+                    user.Login = Regex.Replace(dataReader.GetString(1), @"\s+", "");
+                    user.Username = Regex.Replace(dataReader.GetString(2), @"\s+", "");
+                    user.Password = Regex.Replace(dataReader.GetString(3), @"\s+", "");
+                    user.Salt = (byte[])dataReader["Salt"];
+                    user.Email = Regex.Replace(dataReader.GetString(5), @"\s+", "");
+                    user.IsAdmin = dataReader.GetBoolean(6);
+                    users.Add(user);
+                }
+            }
+            App.Connection.Close();
+
+            return users;
+        }
+
         public static int InsertUser(User user)
         {
             App.Connection.Open();
@@ -55,8 +81,7 @@ namespace GtechDesktop.WPF.Repositories
         public static void UpdateUser(User user)
         {
             App.Connection.Open();
-            var updateCommand = new SqlCommand("UPDATE [gtech].[dbo].[user] SET Login=@Login, Username=@Username, Password=@Password, Email=@Email, IsAdmin=@IsAdmin WHERE UserId=@UserId", App.Connection);
-            updateCommand.Parameters.AddWithValue("@Login", user.Login);
+            var updateCommand = new SqlCommand("UPDATE [gtech].[dbo].[user] SET Username=@Username, Password=@Password, Email=@Email, IsAdmin=@IsAdmin WHERE UserId=@UserId", App.Connection);
             updateCommand.Parameters.AddWithValue("@Username", user.Username);
             updateCommand.Parameters.AddWithValue("@Password", user.Password);
             updateCommand.Parameters.AddWithValue("@Email", user.Email);

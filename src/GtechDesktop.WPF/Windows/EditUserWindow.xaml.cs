@@ -24,10 +24,27 @@ namespace GtechDesktop.WPF.Windows
     public partial class EditUser : Window
     {
         private User User;
+        private bool IsAdmin = false;
         public EditUser(User user)
         {
             InitializeComponent();
 
+            User = user;
+            UsernameTxt.Text = user.Username;
+            EmailTxt.Text = user.Email;
+        }
+
+        public EditUser(User user, bool isAdmin)
+        {
+            InitializeComponent();
+            IsAdmin = isAdmin;
+
+            PasswordTxt.Password = "-------------------";
+            PasswordTxt.IsEnabled = false;
+            NewPasswordLabel.Visibility = Visibility.Collapsed;
+            NewPassword2Label.Visibility = Visibility.Collapsed;
+            NewPasswordTxt.Visibility = Visibility.Collapsed;
+            NewPassword2Txt.Visibility = Visibility.Collapsed;
             User = user;
             UsernameTxt.Text = user.Username;
             EmailTxt.Text = user.Email;
@@ -69,7 +86,7 @@ namespace GtechDesktop.WPF.Windows
                     }
                 }
 
-                if(!PasswordService.VerifyPassword(PasswordTxt.Password, User.Password, User.Salt))
+                if(!PasswordService.VerifyPassword(PasswordTxt.Password, User.Password, User.Salt) && !IsAdmin)
                 {
                     success = false;
                     MessageBox.Show("Aktulne hasło jest niepoprawne!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -80,14 +97,18 @@ namespace GtechDesktop.WPF.Windows
             {
                 User.Username = UsernameTxt.Text;
                 if (!string.IsNullOrWhiteSpace(NewPasswordTxt.Password) && !string.IsNullOrWhiteSpace(NewPassword2Txt.Password))
-                {
+                { 
                     User.Password = PasswordService.HashPasword(NewPasswordTxt.Password, out var salt);
                     User.Salt = salt;
                 }
                 User.Email = EmailTxt.Text;
                 UserRepository.UpdateUser(User);
-                App.LoggedUser = User;
-                App.NavigateToUserDetailsWindow();
+                if(!IsAdmin)
+                {
+                    App.LoggedUser = User;
+                    App.NavigateToUserDetailsWindow(); 
+                }
+
                 Close();
             }
         }

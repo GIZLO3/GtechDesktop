@@ -126,5 +126,21 @@ namespace GtechDesktop.WPF.Repositories
             App.Connection.Close();
             return id;
         }
+
+        public static void UpdateProduct(Product product)
+        {
+            App.Connection.Open();
+            var updateCommand = new SqlCommand("UPDATE [gtech].[dbo].[product] SET Name=@Name, Price=@Price, Amount=@Amount, Image=@Image, Properties=@Properties, ProducerId=@ProducerId, SubcategoryId=@SubcategoryId WHERE ProductId=@ProductId", App.Connection);
+            updateCommand.Parameters.AddWithValue("@ProductId", product.Id);
+            updateCommand.Parameters.AddWithValue("@Name", product.Name);
+            updateCommand.Parameters.AddWithValue("@Price", product.Price);
+            updateCommand.Parameters.AddWithValue("@Amount", product.Amount);
+            updateCommand.Parameters.AddWithValue("@Image", product.Image);
+            updateCommand.Parameters.AddWithValue("@Properties", JsonSerializer.Serialize(product.Properties));
+            updateCommand.Parameters.AddWithValue("@ProducerId", product.ProducerId);
+            updateCommand.Parameters.AddWithValue("@SubcategoryId", product.SubcategoryId);
+            updateCommand.ExecuteNonQuery();
+            App.Connection.Close();
+        }
     }
 }

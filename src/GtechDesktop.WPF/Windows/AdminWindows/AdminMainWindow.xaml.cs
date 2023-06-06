@@ -29,5 +29,11 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
             var addProductWindow = new AddProductWindow();
             addProductWindow.ShowDialog();
         }
+
+        private void UsersManagmentButtonClick(object sender, RoutedEventArgs e)
+        {
+            var usersManagmentWindow = new UsersManagmentWindow();
+            usersManagmentWindow.ShowDialog();
+        }
     }
 }

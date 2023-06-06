@@ -23,8 +23,8 @@
         <Label Content="Edytuj konto" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold"/>
         <Label Content="Nazwa użytkownika:*" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13"/>
         <Label Content="Email:*" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13"/>
-        <Label Content="Nowe Hasło:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13"/>
-        <Label Content="Powtórz nowe hasło:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13"/>
+        <Label x:Name="NewPasswordLabel" Content="Nowe Hasło:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13"/>
+        <Label x:Name="NewPassword2Label" Content="Powtórz nowe hasło:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13"/>
 
         <TextBox x:Name="UsernameTxt" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="150" Padding="2"/>
         <TextBox x:Name="EmailTxt" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="150" Padding="2"/>

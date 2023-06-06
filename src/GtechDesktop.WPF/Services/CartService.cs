@@ -2,6 +2,7 @@
 using GtechDesktop.WPF.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,6 +45,12 @@ namespace GtechDesktop.WPF.Services
         {
             App.Cart.Remove(productId);
             JsonService.WriteFile(App.Cart, App.GtechCartFilePath);
+        }
+
+        public static void ClearCart()
+        {
+            App.Cart = new Dictionary<int, CartProduct>();
+            File.Delete(App.GtechCartFilePath);
         }
     }
 }

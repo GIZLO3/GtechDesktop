@@ -103,6 +103,7 @@ namespace GtechDesktop.WPF.Windows
         {
             var orderWindow = new OrderWindow();
             orderWindow.ShowDialog();
+            GetCart();
         }
 
         private void DeleteFromCartButtonClick(object sender, RoutedEventArgs e)

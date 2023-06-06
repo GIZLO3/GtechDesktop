@@ -46,6 +46,7 @@ namespace GtechDesktop.WPF.Windows
                 var storedUser = UserRepository.GetUser(LoginTxt.Text);
                 if (storedUser.Login != null && PasswordService.VerifyPassword(PasswordTxt.Password, storedUser.Password, storedUser.Salt))
                 {
+                    
                     App.LoggedUser = storedUser;
                     JsonService.WriteFile(App.LoggedUser, App.GtechLoggedUserJsonFilePath);
                     App.NavigateToHomeWindow();

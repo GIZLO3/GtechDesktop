@@ -8,7 +8,7 @@
         Title="AdminMainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -18,6 +18,7 @@
         </Grid.ColumnDefinitions>
 
         <Label Content="G-tech | Panel Admina" Grid.Row="0" Grid.ColumnSpan="2" FontSize="18" Background="#e63946" Foreground="White" BorderBrush="#e63946" BorderThickness="1"/>
-        <Button Content="Dodaj produkt +" Grid.Row="1" Grid.Column="0" FontSize="18" FontWeight="Bold" Background="Transparent" Foreground="#0077b6" BorderBrush="#0077b6" BorderThickness="2" Margin="10" Click="AddProductButtonClick"/>
+        <Button Content="Dodaj produkt" Grid.Row="1" Grid.Column="0" FontSize="18" FontWeight="Bold" Background="Transparent" Foreground="#0077b6" BorderBrush="#0077b6" BorderThickness="2" Margin="10" Click="AddProductButtonClick"/>
+        <Button Content="Użytkownicy" Grid.Row="1" Grid.Column="1" FontSize="18" FontWeight="Bold" Background="Transparent" Foreground="#0077b6" BorderBrush="#0077b6" BorderThickness="2" Margin="10" Click="UsersManagmentButtonClick"/>
     </Grid>
 </Window>

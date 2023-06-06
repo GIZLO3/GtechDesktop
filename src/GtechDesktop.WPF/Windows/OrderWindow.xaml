@@ -21,6 +21,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -37,17 +38,20 @@
             <TextBox x:Name="SurnameTxt" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="10,0"/>
 
             <Label Content="Adres: " FontSize="14" Grid.Row="3" Grid.Column="0"  HorizontalAlignment="Center"/>
-            <TextBox x:Name="AddessTxt"  Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="10,0"/>
+            <TextBox x:Name="AddressTxt"  Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="10,0"/>
 
             <Label Content="Kod pocztowy: " FontSize="14" Grid.Row="4" Grid.Column="0"  HorizontalAlignment="Center"/>
-            <TextBox x:Name="ZipCodeTxt" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="10,0"/>
+            <TextBox x:Name="PostalCodeTxt" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="10,0"/>
 
             <Label Content="Miasto: " FontSize="14" Grid.Row="5" Grid.Column="0"  HorizontalAlignment="Center"/>
-            <TextBox x:Name="TownTxt" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Margin="10,0"/>
+            <TextBox x:Name="CityTxt" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Margin="10,0"/>
 
-            <Grid Grid.Row="6" Grid.ColumnSpan="2">
+            <Label Content="Numer telefonu: " FontSize="14" Grid.Row="6" Grid.Column="0"  HorizontalAlignment="Center"/>
+            <TextBox x:Name="PhoneNumberTxt" Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" Margin="10,0"/>
+
+            <Grid Grid.Row="7" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
@@ -66,11 +70,11 @@
                     <Label Content="Cena dosawy: " Grid.Row="1" Grid.Column="0"/>
                     <Label Content="Całkowita kwota: " Grid.Row="2" Grid.Column="0"/>
                     
-                    <Label x:Name="ProductsTotalPrice" Grid.Row="0" Grid.Column="1"/>
-                    <Label x:Name="DeliveryPrice" Grid.Row="1" Grid.Column="1"/>
-                    <Label x:Name="OrderTotalPrice" Grid.Row="2" Grid.Column="1"/>
+                    <Label x:Name="ProductsTotalPriceLabel" Grid.Row="0" Grid.Column="1"/>
+                    <Label x:Name="DeliveryPriceLabel" Grid.Row="1" Grid.Column="1"/>
+                    <Label x:Name="OrderTotalPriceLabel" Grid.Row="2" Grid.Column="1"/>
                 </Grid>
-                <Button Content="Złóż zamównienie" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Background="#0077b6" Foreground="White" BorderBrush="#0077b6" FontSize="13" Padding="5,3"/>
+                <Button Content="Złóż zamównienie" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Background="#0077b6" Foreground="White" BorderBrush="#0077b6" FontSize="13" Padding="5,3" Click="MakeOrderButtonClick"/>
             </Grid>
         </Grid>
     </Grid>
