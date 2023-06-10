@@ -1,11 +1,11 @@
-﻿<Window x:Class="GtechDesktop.WPF.Windows.AdminWindows.AddProducer"
+﻿<Window x:Class="GtechDesktop.WPF.Windows.AdminWindows.AddCategoryWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GtechDesktop.WPF.Windows.AdminWindows"
         mc:Ignorable="d"
-        Title="AddProducer" Height="200" Width="300" ResizeMode="NoResize">
+        Title="AddCategoryWindow" Height="200" Width="300" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -17,11 +17,11 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Dodaj producenta" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold"/>
+        <Label Content="Dodaj kategorię" Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold"/>
         <Label Content="Nazwa:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13"/>
         <TextBox x:Name="NameTxt" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="160" Padding="2"/>
 
-        <Button Content="Dodaj producenta" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="10,5" FontSize="13" Background="#0077b6" Foreground="White" BorderBrush="#0077b6" 
-                Click="AddProducerButtonClick"/>
+        <Button Content="Dodaj kategorię" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="10,5" FontSize="13" Background="#0077b6" Foreground="White" BorderBrush="#0077b6" 
+                Click="AddCategoryButtonClick"/>
     </Grid>
 </Window>

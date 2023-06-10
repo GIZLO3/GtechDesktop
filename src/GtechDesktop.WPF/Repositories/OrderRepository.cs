@@ -11,6 +11,38 @@ namespace GtechDesktop.WPF.Repositories
 {
     public class OrderRepository
     {   
+        public static List<Order> GetUserOrders(int userId)
+        {
+            App.Connection.Open();
+            var orders = new List<Order>();
+            var getCommand = new SqlCommand("SELECT * FROM [gtech].[dbo].[order] WHERE UserId=@UserId", App.Connection);
+            getCommand.Parameters.AddWithValue("@UserId", userId);
+
+            using (var dataReader = getCommand.ExecuteReader())
+            {
+                while (dataReader.Read())
+                {
+                    var order = new Order();
+                    order.Id = dataReader.GetInt32(0);
+                    order.SubmissionDate = dataReader.GetDateTime(1);
+                    order.DeliveryDate = dataReader.GetDateTime(2);
+                    order.OrderTotalPrice = dataReader.GetDecimal(3);
+                    order.Status = Enum.Parse<OrderStatus>(dataReader.GetString(4));
+                    order.Products = JsonSerializer.Deserialize<Dictionary<int, CartProduct>>(dataReader.GetString(5));
+                    order.UserId = dataReader.GetInt32(6);
+                    order.Name = dataReader.GetString(7);
+                    order.Surname = dataReader.GetString(8);
+                    order.Address = dataReader.GetString(9);
+                    order.PostalCode = dataReader.GetString(10);
+                    order.City = dataReader.GetString(11);
+                    order.PhoneNumber = dataReader.GetString(12);
+                    orders.Add(order);
+                }
+            }
+            App.Connection.Close();
+            return orders;
+        }
+
         public static int InsertOrder(Order order)
         {
             App.Connection.Open();

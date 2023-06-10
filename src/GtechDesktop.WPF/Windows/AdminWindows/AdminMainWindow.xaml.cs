@@ -30,6 +30,23 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
             addProductWindow.ShowDialog();
         }
 
+        private void ProductsManagmentButtonClick(object sender, RoutedEventArgs e)
+        {
+            var productsManagmentWindow = new ProductsManagmentWindow();
+            productsManagmentWindow.ShowDialog();
+        }
+
+        private void AddSubcategoryButtonClick(object sender, RoutedEventArgs e)
+        {
+            var addSubcategoryWindow = new AddSubcategoryWindow();
+            addSubcategoryWindow.ShowDialog();
+        }
+
+        private void SubcategoryManagmentButtonClick(object sender, RoutedEventArgs e)
+        {
+            var subcategoriesManagmentWindow = new SubcategoriesManagmentWindow();
+            subcategoriesManagmentWindow.ShowDialog();
+        }
         private void UsersManagmentButtonClick(object sender, RoutedEventArgs e)
         {
             var usersManagmentWindow = new UsersManagmentWindow();

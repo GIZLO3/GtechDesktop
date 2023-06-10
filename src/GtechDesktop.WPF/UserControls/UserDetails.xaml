@@ -21,13 +21,13 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Content="Szczegóły konta: " Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+            <Label Content="Szczegóły konta: " Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+            <Label Content="Moje zamówienia: " Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
 
-            <Grid Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
+            <Grid Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" MaxHeight="100"/>
                     <RowDefinition Height="*" MaxHeight="100"/>
@@ -55,6 +55,18 @@
                     <Button Content="Wyloguj się" Margin="10,0" Padding="10" FontSize="14" Background="#e63946" Foreground="White" BorderBrush="#e63946" Click="LogOutButtonClick"/>
                 </StackPanel>
             </Grid>
+
+            <ListView x:Name="OrdersListView" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" BorderThickness="0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Numer" DisplayMemberBinding="{Binding Id}"/>
+                        <GridViewColumn Header="Data zamówienia" DisplayMemberBinding="{Binding SubmissionDate}"/>
+                        <GridViewColumn Header="Data dostawy" DisplayMemberBinding="{Binding DeliveryDate}"/>
+                        <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}"/>
+                        <GridViewColumn Header="Wartość" DisplayMemberBinding="{Binding OrderTotalPrice}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </Grid>
     </Grid>
 </UserControl>

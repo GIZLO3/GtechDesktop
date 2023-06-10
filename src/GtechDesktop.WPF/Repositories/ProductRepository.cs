@@ -67,6 +67,34 @@ namespace GtechDesktop.WPF.Repositories
 
             return products;
         }
+        public static List<Product> GetProducts()
+        {
+            App.Connection.Open();
+            var products = new List<Product>();
+            var getCommand = new SqlCommand("SELECT * FROM [gtech].[dbo].[product]", App.Connection);
+
+            using (var dataReader = getCommand.ExecuteReader())
+            {
+                while (dataReader.Read())
+                {
+                    var product = new Product();
+                    product.Id = dataReader.GetInt32(0);
+                    product.Name = dataReader.GetString(1);
+                    product.Price = dataReader.GetDecimal(2);
+                    product.Amount = dataReader.GetInt32(3);
+                    product.Image = Regex.Replace(dataReader.GetString(4), @"\s+", "");
+                    product.Properties = JsonSerializer.Deserialize<Dictionary<string, string>>(dataReader.GetString(5));
+                    product.ProducerId = dataReader.GetInt32(6);
+                    product.SubcategoryId = dataReader.GetInt32(7);
+                    product.BitmapImage = new BitmapImage(new Uri(Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..")) + product.Image));
+                    products.Add(product);
+                }
+            }
+            App.Connection.Close();
+
+            return products;
+        }
+
         public static List<Product> GetRandomPercentOfProducts(int percent)
         {
             App.Connection.Open();
@@ -140,6 +168,15 @@ namespace GtechDesktop.WPF.Repositories
             updateCommand.Parameters.AddWithValue("@ProducerId", product.ProducerId);
             updateCommand.Parameters.AddWithValue("@SubcategoryId", product.SubcategoryId);
             updateCommand.ExecuteNonQuery();
+            App.Connection.Close();
+        }
+
+        public static void DeleteProduct(Product product)
+        {
+            App.Connection.Open();
+            var deleteCommand = new SqlCommand("DELETE FROM [gtech].[dbo].[product] WHERE ProductId=@ProductId", App.Connection);
+            deleteCommand.Parameters.AddWithValue("@ProductId", product.Id);
+            deleteCommand.ExecuteNonQuery();
             App.Connection.Close();
         }
     }

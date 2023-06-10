@@ -94,7 +94,7 @@ namespace GtechDesktop.WPF.Repositories
         public static void DeleteUser(User user)
         {
             App.Connection.Open();
-            var deleteCommand = new SqlCommand("DELETE FROM [gtech].[dbo].[user] WHERE UserId=@UserId");
+            var deleteCommand = new SqlCommand("DELETE FROM [gtech].[dbo].[user] WHERE UserId=@UserId", App.Connection);
             deleteCommand.Parameters.AddWithValue("@UserId", user.Id);
             deleteCommand.ExecuteNonQuery();
             App.Connection.Close();

@@ -38,7 +38,12 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
 
         private void DeleteButtonClick(object sender, RoutedEventArgs e)
         {
-
+            var user = ((Button)sender).CommandParameter as User;
+            if(MessageBox.Show("Czy na pewno chcesz usunąć użytkownika " + user.Login, "G-tech", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                UserRepository.DeleteUser(user);
+                UsersListView.ItemsSource = UserRepository.GetUsers();
+            }
         }
     }
 }

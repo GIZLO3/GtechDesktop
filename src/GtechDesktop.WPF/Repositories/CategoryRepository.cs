@@ -49,5 +49,14 @@ namespace GtechDesktop.WPF.Repositories
             App.Connection.Close();
             return categories;
         }
+        public static int InsertCategory(Category category)
+        {
+            App.Connection.Open();
+            var insertCommand = new SqlCommand("INSERT INTO [gtech].[dbo].[category] VALUES(@Name)", App.Connection);
+            insertCommand.Parameters.AddWithValue("@Name", category.Name);
+            var id = insertCommand.ExecuteNonQuery();
+            App.Connection.Close();
+            return id;
+        }
     }
 }

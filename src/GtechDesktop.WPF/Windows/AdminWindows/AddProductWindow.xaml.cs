@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,16 +27,16 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
         private int SubcategoryId;
         private int ProducerId;
         private string ImageSource;
-        private string ImageFileName;
+        private string? ImageFileName = null;
         private string ImageSafeFileName;
         private Dictionary<string, TextBox> parametersTextBoxes = new Dictionary<string, TextBox>();
         public AddProductWindow()
         {
             InitializeComponent();
+
             GetCategories();
             GetProducers();
         }
-
         private void GetCategories()
         {
             var categories = CategoryRepository.GetAllCategories();
@@ -58,7 +59,6 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
                 SubcategoriesCmbBox.SelectedIndex = 0;
             }
         }
-
         private void GetProducers()
         {
             var producers = ProducerRepository.GetAllProducers();
@@ -84,7 +84,7 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
                 ParametersGrid.Children.Clear();
                 ParametersGrid.RowDefinitions.Clear();
                 var subcategory = SubcategoryRepository.GetSubcategory(SubcategoryId);
-                var parameters = subcategory.ParametersPatten;
+                var parameters = subcategory.ParametersPattern;
 
                 var parameterIndex = 0;
                 for (var i = 0; i <= (parameters.Count / 2); i++)
@@ -100,7 +100,6 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
                         var label = new Label();
                         label.Content = parameters[parameterIndex] + ": ";
                         label.FontWeight = FontWeights.Bold;
-                        //textBox.SetValue(FrameworkElement.NameProperty, parameters[parameterIndex]);
                         parametersTextBoxes.Add(parameters[parameterIndex], textBox);
                         parameterIndex++;
 
@@ -124,22 +123,24 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
             dialog.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
               "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
               "Portable Network Graphic (*.png)|*.png";
-            if(dialog.ShowDialog() == true)
+            if (dialog.ShowDialog() == true)
             {
                 ImageFileName = dialog.FileName;
                 ImageSafeFileName = dialog.SafeFileName;
                 ImageSource = Path.Combine(@"\Images", dialog.SafeFileName);
                 Image.Source = new BitmapImage(new Uri(ImageFileName));
-            }    
+            }
         }
 
         private void AddProductButtonClick(object sender, RoutedEventArgs e)
         {
-            if(string.IsNullOrEmpty(NameTxt.Text) || string.IsNullOrEmpty(PriceTxt.Text) || string.IsNullOrEmpty(AmountTxt.Text))
+            var priceRegex = new Regex(@"^\d*\,?\d*$");
+
+            if(string.IsNullOrEmpty(NameTxt.Text) || string.IsNullOrEmpty(PriceTxt.Text) || string.IsNullOrEmpty(AmountTxt.Text) || ImageFileName == null)
             {
                 MessageBox.Show("Uzupełnij wszytkie pola po lewej stonie!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else if(PriceTxt.Text.All(char.IsDigit) && AmountTxt.Text.All(char.IsDigit))
+            else if (priceRegex.IsMatch(PriceTxt.Text) && AmountTxt.Text.All(char.IsDigit))
             {
                 var product = new Product();
                 product.Name = NameTxt.Text;
@@ -148,7 +149,7 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
                 var newDirectory = Path.Combine(@"..\..\..\Images", ImageSafeFileName);
                 File.Copy(ImageFileName, newDirectory);
                 product.Image = product.Image = ImageSource;
-
+                
                 var properties = new Dictionary<string, string>();
                 var keys = parametersTextBoxes.Keys;
                 foreach (var key in keys)

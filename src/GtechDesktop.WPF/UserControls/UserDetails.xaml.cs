@@ -1,4 +1,5 @@
 ﻿using GtechDesktop.WPF.Models;
+using GtechDesktop.WPF.Repositories;
 using GtechDesktop.WPF.Windows;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace GtechDesktop.WPF.UserControls
             loginLabel.Content = user.Login;
             usernameLabel.Content = user.Username;
             emailLabel.Content = user.Email;
+            OrdersListView.ItemsSource = OrderRepository.GetUserOrders(user.Id);
         }
 
         private void LogOutButtonClick(object sender, RoutedEventArgs e)
