@@ -1,18 +1,4 @@
-﻿using GtechDesktop.WPF.Models;
-using GtechDesktop.WPF.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace GtechDesktop.WPF.Windows.AdminWindows
 {
@@ -21,7 +7,7 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
     /// </summary>
     public partial class AddParameterPopUpWindow : Window
     {
-        public string Parameter 
+        public string Parameter //pole Parametr, dzięki któremu możemy zwrócić wartość pola tekstowego do miejsca wywołania metody ShowDialog okna
         { 
             get { return ParameterTxt.Text; } 
         }
@@ -35,7 +21,7 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
         {
             if (!string.IsNullOrEmpty(ParameterTxt.Text))
             {
-                DialogResult = true;
+                DialogResult = true;//Ustawnienie DialogResult na true
                 Close();
             }
             else

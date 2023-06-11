@@ -2,19 +2,9 @@
 using GtechDesktop.WPF.Repositories;
 using GtechDesktop.WPF.Services;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace GtechDesktop.WPF.Windows
 {
@@ -23,6 +13,7 @@ namespace GtechDesktop.WPF.Windows
     /// </summary>
     public partial class OrderWindow : Window
     {
+        private readonly decimal DeliveryPrice = 8.99m; //cena dostawy jest stała
         private decimal OrderTotalPrice = 0;
         public OrderWindow()
         {
@@ -34,14 +25,14 @@ namespace GtechDesktop.WPF.Windows
             {
                 productsTotalPrice += App.Cart[key].TotalPrice;
             }
-            OrderTotalPrice = productsTotalPrice + (decimal)8.99;
+            OrderTotalPrice = productsTotalPrice + DeliveryPrice;
 
             ProductsTotalPriceLabel.Content = productsTotalPrice + "zł";
-            DeliveryPriceLabel.Content = 8.99 + "zł";
+            DeliveryPriceLabel.Content = DeliveryPrice + "zł";
             OrderTotalPriceLabel.Content = OrderTotalPrice + "zł";
         }
 
-        private bool Validete()
+        private bool Validete()//validacja danych
         {
             if (App.LoggedUser == null)
                 return false;
@@ -72,9 +63,9 @@ namespace GtechDesktop.WPF.Windows
             return true;
         }
 
-        private void MakeOrderButtonClick(object sender, RoutedEventArgs e)
+        private void MakeOrderButtonClick(object sender, RoutedEventArgs e)//składanie zamówienia
         {
-            if (Validete())
+            if (Validete() && App.LoggedUser != null)
             {
                 var order = new Order();
                 order.SubmissionDate = DateTime.Now;
@@ -93,7 +84,7 @@ namespace GtechDesktop.WPF.Windows
                 CartService.ClearCart();
 
                 var keys = order.Products.Keys.ToArray();
-                foreach( var key in keys)
+                foreach( var key in keys)//zmiana ilości produktu w bazie 
                 {
                     var product = ProductRepository.GetProduct(key);
                     product.Amount -= order.Products[key].Amount;

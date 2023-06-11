@@ -3,11 +3,8 @@ using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace GtechDesktop.WPF.Repositories
@@ -95,13 +92,11 @@ namespace GtechDesktop.WPF.Repositories
             return products;
         }
 
-        public static List<Product> GetRandomPercentOfProducts(int percent)
+        public static List<Product> GetRandomPercentOfProducts()
         {
             App.Connection.Open();
             var products = new List<Product>();
-            var getCommand = new SqlCommand("SELECT * FROM [gtech].[dbo].[product] WHERE ProductId IN (SELECT TOP @percent PERCENT ProductId FROM [gtech].[dbo].[product] ORDER BY newid())", App.Connection);
-            getCommand.Parameters.AddWithValue("@percent", percent);
-
+            var getCommand = new SqlCommand("SELECT * FROM [gtech].[dbo].[product] WHERE ProductId IN (SELECT TOP 50 PERCENT ProductId FROM [gtech].[dbo].[product] ORDER BY newid())", App.Connection);
             using (var dataReader = getCommand.ExecuteReader())
             {
                 while (dataReader.Read())

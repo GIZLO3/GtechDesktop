@@ -1,14 +1,8 @@
 ﻿using GtechDesktop.WPF.Models;
 using Microsoft.Data.SqlClient;
-using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace GtechDesktop.WPF.Repositories
 {

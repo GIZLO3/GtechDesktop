@@ -20,7 +20,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Label x:Name="SubacategoryName" FontSize="18"/>
+            <Label x:Name="SubacategoryName" FontSize="20" FontWeight="SemiBold"/>
             <ListView x:Name="ProductBox" Grid.Row="1" VerticalAlignment="Top" BorderThickness="0">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

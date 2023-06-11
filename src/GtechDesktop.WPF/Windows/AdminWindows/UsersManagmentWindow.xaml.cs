@@ -1,18 +1,7 @@
 ﻿using GtechDesktop.WPF.Models;
 using GtechDesktop.WPF.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace GtechDesktop.WPF.Windows.AdminWindows
 {
@@ -28,22 +17,28 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
             UsersListView.ItemsSource = UserRepository.GetUsers(); 
         }
 
-        private void EditButtonClick(object sender, RoutedEventArgs e)
+        private void EditButtonClick(object sender, RoutedEventArgs e)//otwarcie okna do edycji użytkownika
         {
             var user = ((Button)sender).CommandParameter as User;
-            var editUserWindow = new EditUser(user, true);
-            editUserWindow.ShowDialog();
-            UsersListView.ItemsSource = UserRepository.GetUsers();
-        }
-
-        private void DeleteButtonClick(object sender, RoutedEventArgs e)
-        {
-            var user = ((Button)sender).CommandParameter as User;
-            if(MessageBox.Show("Czy na pewno chcesz usunąć użytkownika " + user.Login, "G-tech", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            if(user != null)
             {
-                UserRepository.DeleteUser(user);
+                var editUserWindow = new EditUser(user, true);
+                editUserWindow.ShowDialog();
                 UsersListView.ItemsSource = UserRepository.GetUsers();
             }
+        }
+
+        private void DeleteButtonClick(object sender, RoutedEventArgs e)//usuwanie użytkownika
+        {
+            var user = ((Button)sender).CommandParameter as User;
+            if(user != null)
+            {
+                if (MessageBox.Show("Czy na pewno chcesz usunąć użytkownika " + user.Login, "G-tech", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    UserRepository.DeleteUser(user);
+                    UsersListView.ItemsSource = UserRepository.GetUsers();
+                }
+            }          
         }
     }
 }

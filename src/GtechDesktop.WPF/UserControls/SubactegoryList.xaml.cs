@@ -1,21 +1,8 @@
 ﻿using GtechDesktop.WPF.Models;
 using GtechDesktop.WPF.Repositories;
 using GtechDesktop.WPF.Windows;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-
 
 namespace GtechDesktop.WPF.UserControls
 {
@@ -29,15 +16,19 @@ namespace GtechDesktop.WPF.UserControls
             InitializeComponent();
 
             SubacategoryName.Content = subcategory.Name;
-            var products = ProductRepository.GetProductFromSubactegory(subcategory.Id);                
+            App.mainWindow.Title = subcategory.Name;
+            var products = ProductRepository.GetProductFromSubactegory(subcategory.Id);//pobranie produktów z danej podkategorii z bazy danych             
             ProductBox.ItemsSource = products;
         }
 
-        private void MoreDetailsButtonClicked(object sender, RoutedEventArgs e)
+        private void MoreDetailsButtonClicked(object sender, RoutedEventArgs e)//obsluga kliknięcia przyciku szczegółów produktu
         {
             var product = ((Button)sender).CommandParameter as Product;
-            var productDetailsWindow = new ProductDetailsWindow(product);
-            productDetailsWindow.Show();
+            if (product != null)
+            {
+                var productDetailsWindow = new ProductDetailsWindow(product);
+                productDetailsWindow.Show();
+            }
         }
     }
 }

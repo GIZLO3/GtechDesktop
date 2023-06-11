@@ -2,20 +2,11 @@
 using GtechDesktop.WPF.Repositories;
 using GtechDesktop.WPF.Windows;
 using GtechDesktop.WPF.Windows.AdminWindows;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GtechDesktop.WPF.UserControls
 {
@@ -31,48 +22,48 @@ namespace GtechDesktop.WPF.UserControls
             GetCategories();
         }
 
-        private void GetCategories()
+        private void GetCategories()//tworzenie menu z kategoriami i dodawanie ich do grida
         {
             var categories = CategoryRepository.GetAllCategories();
             for (int i = 0; i < categories.Count(); i++)
             {
-                var columnDefinition = new ColumnDefinition();
+                var columnDefinition = new ColumnDefinition();//tworzenie nowego columnDefinition
                 columnDefinition.MaxWidth = 200;
                 categoriesBar.ColumnDefinitions.Add(columnDefinition);
                 var menu = new Menu();
                 menu.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f8f9fa"));
                 menu.SetValue(Grid.ColumnProperty, i);
-                categoriesBar.Children.Add(menu);
+                categoriesBar.Children.Add(menu);//dodanie menu do grida
                 var categoryMenuItem = new MenuItem();
                 categoryMenuItem.Header = categories[i].Name;
                 categoryMenuItem.FontSize = 14;
                 categoryMenuItem.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f8f9fa"));
 
                 var subcategories = SubcategoryRepository.GetSubcategoriesByCategoryId(categories[i].Id);
-                foreach (var subcategory in subcategories)
+                foreach (var subcategory in subcategories)//tworzenie MenuItem dla każdej podkategorii w aktualnej kategorii
                 {
                     var subcategoryMenuItem = new MenuItem();
                     subcategoryMenuItem.Header = subcategory.Name;
                     subcategoryMenuItem.CommandParameter = subcategory;
-                    subcategoryMenuItem.Click += NavigateToSubacetgory;
-                    categoryMenuItem.Items.Add(subcategoryMenuItem);
+                    subcategoryMenuItem.Click += NavigateToSubacetgory;//dodanie event handler kliknięcia
+                    categoryMenuItem.Items.Add(subcategoryMenuItem);//dodanie do MenuItema z kategorią MenuItem z podkategorią
                 }
 
-                menu.Items.Add(categoryMenuItem);
+                menu.Items.Add(categoryMenuItem);//dodanie do menu MenuItema z kategorią
             }
         }
 
         private void UpdateLoggedUser()
         {
-            if (App.LoggedUser == null)
+            if (App.LoggedUser == null)//jeżeli użytkownik nie jest zalogowany
             {
                 userButton.Content = "Zaloguj się";
             }
-            else
+            else//jeżeli użytkownik jest zalogowany
             {
                 userButton.Content = App.LoggedUser.Login;
 
-                if (App.LoggedUser.IsAdmin)
+                if (App.LoggedUser.IsAdmin)//jeżeli jest adminem utworzenie przyciku do przejścia do widoku admina
                 { 
                     var button = new Button();
                     button.SetValue(Grid.RowProperty, 2);
@@ -107,18 +98,18 @@ namespace GtechDesktop.WPF.UserControls
 
         private void UserButtonClick(object sender, RoutedEventArgs e)
         {
-            if (App.LoggedUser == null)
+            if (App.LoggedUser == null)//jeżeli użytkownik nie jest zalogowany - otworzenie okna logowania
             {
                 var loginWindow = new LoginWindow();
                 loginWindow.ShowDialog();
             }
-            else
+            else//jeżeli użytkownik jest zalogowany - zmiana contentu MainWindow na szczegóły konta
             {
                 App.NavigateToUserDetailsWindow();
             }
         }
 
-        private void CartButtonClick(object sender, RoutedEventArgs e)
+        private void CartButtonClick(object sender, RoutedEventArgs e)//otwarcie okna koszyka
         {
             var cartWindow = new CartWindow();
             cartWindow.ShowDialog();

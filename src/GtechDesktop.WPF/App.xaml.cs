@@ -1,19 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.IO;
-using System.Linq;
-using System.Security.Policy;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows;
 using GtechDesktop.WPF.Models;
 using GtechDesktop.WPF.Repositories;
 using GtechDesktop.WPF.UserControls;
 using GtechDesktop.WPF.Windows.AdminWindows;
 using Microsoft.Data.SqlClient;
-using Microsoft.VisualBasic;
 
 namespace GtechDesktop.WPF
 {
@@ -31,37 +25,58 @@ namespace GtechDesktop.WPF
         public static string GtechCartFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "gtechCart.json");
 
         public static AdminMainWindow? adminMainWindow;
-        private static MainWindow? mainWindow;
+        public static MainWindow? mainWindow;
 
-        private void App_Startup(object sender, StartupEventArgs e)
+        private void App_Startup(object sender, StartupEventArgs e)//metoda wywoływana podczas włączania aplikacji, ustawia się to w App.xaml (Startup="App_Startup")
         {
-            if (File.Exists(GtechLoggedUserJsonFilePath))
+            if (File.Exists(GtechLoggedUserJsonFilePath))//pobranie danych z pliku o zalogowanym używkowniku
             {
                 using StreamReader streamReader = new(GtechLoggedUserJsonFilePath);
                 var json = streamReader.ReadToEnd();
-                LoggedUser = JsonSerializer.Deserialize<User>(json);
+                var localUser = JsonSerializer.Deserialize<User>(json);
+                if (localUser != null)
+                {
+                    var storedUser = UserRepository.GetUser(localUser.Id);//pobranie z bazy uzytkownika 
+                    if(storedUser != null)
+                    {
+                        if (localUser.Password == storedUser.Password)//sprawdzenie czy hasła się zgadzają
+                            LoggedUser = storedUser;
+                        else
+                            File.Delete(GtechLoggedUserJsonFilePath);
+                    }
+                }
+                
             }
 
-            if (File.Exists(GtechCartFilePath))
+            if (File.Exists(GtechCartFilePath))//pobranie koszyka z pliku
             {
                 using StreamReader streamReader = new(GtechCartFilePath);
                 var json = streamReader.ReadToEnd();
                 Cart = JsonSerializer.Deserialize<Dictionary<int, CartProduct>>(json);
             }
 
+            //otworzenie MainWindow
             Application.Current.MainWindow = new MainWindow();
             Application.Current.MainWindow.Show();
             mainWindow = (MainWindow)Application.Current.MainWindow;
         }
 
-        public static void NavigateToHomeWindow()
+        public static void NavigateToHomeWindow()//ustawienie contentu mainWindow na Home
         {  
-            mainWindow.MainContent.Content = new Home();
+            if(mainWindow != null)
+            {
+                mainWindow.MainContent.Content = new Home();
+                mainWindow.Title = "G-tech Desktop";
+            }       
         }
       
-        public static void NavigateToUserDetailsWindow()
+        public static void NavigateToUserDetailsWindow()//ustawienie contentu mainWindow na userDetails
         {
-            mainWindow.MainContent.Content = new UserDetails(LoggedUser);
+            if (mainWindow != null && LoggedUser != null)
+            {
+                mainWindow.MainContent.Content = new UserDetails(LoggedUser);
+                mainWindow.Title = "Moje konto";
+            }
         }
     }
 }

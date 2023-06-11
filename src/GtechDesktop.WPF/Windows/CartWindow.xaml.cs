@@ -1,19 +1,8 @@
 ﻿using GtechDesktop.WPF.Repositories;
 using GtechDesktop.WPF.Services;
-using GtechDesktop.WPF.UserControls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace GtechDesktop.WPF.Windows
 {
@@ -40,7 +29,7 @@ namespace GtechDesktop.WPF.Windows
                 GetCart();  
         }
 
-        private void GetCart()
+        private void GetCart()//wyswietlanie koszyka
         {
             var keys = App.Cart.Keys;
             var productIndex = 0;
@@ -98,19 +87,17 @@ namespace GtechDesktop.WPF.Windows
             }
         }
 
-
-        private void MakeOrderButtonClick(object sender, RoutedEventArgs e)
+        private void MakeOrderButtonClick(object sender, RoutedEventArgs e)//otwarcie okna składania zamównienia
         {
             var orderWindow = new OrderWindow();
             orderWindow.ShowDialog();
             GetCart();
         }
 
-        private void DeleteFromCartButtonClick(object sender, RoutedEventArgs e)
+        private void DeleteFromCartButtonClick(object sender, RoutedEventArgs e)//usunięcie produktu z koszyka
         {
             var productId = (int)((Button)sender).CommandParameter;
             CartService.DeleteFromCart(productId);
-
             GetCart();
         }
     }

@@ -1,20 +1,8 @@
 ﻿using GtechDesktop.WPF.Models;
 using GtechDesktop.WPF.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace GtechDesktop.WPF.Windows.AdminWindows
 {
@@ -25,7 +13,7 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
     {
         private Subcategory? Subcategory { get; set; }
         private List<string> ParametersPattern = new List<string>();
-        public AddSubcategoryWindow()
+        public AddSubcategoryWindow()//kostruktor do dodawania
         {
             InitializeComponent();
 
@@ -36,7 +24,7 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
             GetCategories();
             ParametersDataGrid.ItemsSource = ParametersPattern;
         }
-        public AddSubcategoryWindow(Subcategory subcategory)
+        public AddSubcategoryWindow(Subcategory subcategory)//kostruktor do edycji
         {
             InitializeComponent();
 
@@ -53,7 +41,7 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
             ParametersDataGrid.ItemsSource = ParametersPattern;
         }
 
-        private void GetCategories()
+        private void GetCategories() //pobranie kategorii z bazy i wstawienie do combobox
         {
             var categories = CategoryRepository.GetAllCategories();
             var categoryIdName = new List<string>();
@@ -62,13 +50,13 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
             CategoriesCmbBox.SelectedIndex = categoryIdName.Count()-1;
         }
 
-        private void AddCategoryButtonClick(object sender, RoutedEventArgs e)
+        private void AddCategoryButtonClick(object sender, RoutedEventArgs e)//otworzenie okna dodawania kategorii
         {
             var addCategoryWindow = new AddCategoryWindow();
             addCategoryWindow.ShowDialog();
         }
 
-        private void AddParameterButtonClick(object sender, RoutedEventArgs e)
+        private void AddParameterButtonClick(object sender, RoutedEventArgs e)//otworzenie okna dodawania parametru
         {
             var addParameterPopUpWindow = new AddParameterPopUpWindow();
             if(addParameterPopUpWindow.ShowDialog() == true)
@@ -78,13 +66,13 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
             }
         }
 
-        private void DeleteParametrButtonClick(object sender, RoutedEventArgs e)
+        private void DeleteParametrButtonClick(object sender, RoutedEventArgs e)//usuwanie parametru
         {
             ParametersPattern.RemoveAt(ParametersDataGrid.SelectedIndex);
             ParametersDataGrid.Items.Refresh();
         }
 
-        private void AddSubcategoryButtonClick(object sender, RoutedEventArgs e)
+        private void AddSubcategoryButtonClick(object sender, RoutedEventArgs e)//dodawanie podkategroii do bazy
         {
             var selectedCategory = CategoriesCmbBox.SelectedItem as string;
             if(selectedCategory != null && !string.IsNullOrEmpty(NameTxt.Text))
@@ -97,10 +85,10 @@ namespace GtechDesktop.WPF.Windows.AdminWindows
                 Close();
             }
         }
-        private void EditSubcategoryButtonClick(object sender, RoutedEventArgs e)
+        private void EditSubcategoryButtonClick(object sender, RoutedEventArgs e)//edycja podkategorii w bazie
         {
             var selectedCategory = CategoriesCmbBox.SelectedItem as string;
-            if (selectedCategory != null && !string.IsNullOrEmpty(NameTxt.Text))
+            if (selectedCategory != null && !string.IsNullOrEmpty(NameTxt.Text) && Subcategory != null)
             {
                 Subcategory.Name = NameTxt.Text;
                 Subcategory.ParametersPattern = ParametersPattern;

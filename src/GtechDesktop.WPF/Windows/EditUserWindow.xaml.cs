@@ -1,20 +1,9 @@
 ﻿using GtechDesktop.WPF.Models;
 using GtechDesktop.WPF.Repositories;
 using GtechDesktop.WPF.Services;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace GtechDesktop.WPF.Windows
 {
@@ -34,17 +23,13 @@ namespace GtechDesktop.WPF.Windows
             EmailTxt.Text = user.Email;
         }
 
-        public EditUser(User user, bool isAdmin)
+        public EditUser(User user, bool isAdmin)//konstruktor z edycją z poziomu admina (brak konieczności podawania hasła)
         {
             InitializeComponent();
             IsAdmin = isAdmin;
 
             PasswordTxt.Password = "-------------------";
             PasswordTxt.IsEnabled = false;
-            NewPasswordLabel.Visibility = Visibility.Collapsed;
-            NewPassword2Label.Visibility = Visibility.Collapsed;
-            NewPasswordTxt.Visibility = Visibility.Collapsed;
-            NewPassword2Txt.Visibility = Visibility.Collapsed;
             User = user;
             UsernameTxt.Text = user.Username;
             EmailTxt.Text = user.Email;
@@ -93,7 +78,7 @@ namespace GtechDesktop.WPF.Windows
                 }
             }
 
-            if (success)
+            if (success)//edycja uzytkownika w bazie
             {
                 User.Username = UsernameTxt.Text;
                 if (!string.IsNullOrWhiteSpace(NewPasswordTxt.Password) && !string.IsNullOrWhiteSpace(NewPassword2Txt.Password))

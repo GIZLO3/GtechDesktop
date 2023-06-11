@@ -1,20 +1,8 @@
 ﻿using GtechDesktop.WPF.Models;
 using GtechDesktop.WPF.Repositories;
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Text.Json;
+using GtechDesktop.WPF.Windows;
 
 namespace GtechDesktop.WPF.UserControls
 {
@@ -26,6 +14,18 @@ namespace GtechDesktop.WPF.UserControls
         public Home()
         {
             InitializeComponent();
+
+            ProductsBox.ItemsSource = ProductRepository.GetRandomPercentOfProducts();
+        }
+
+        private void MoreDetailsButtonClicked(object sender, RoutedEventArgs e)//obsluga kliknięcia przyciku szczegółów produktu
+        {
+            var product = ((Button)sender).CommandParameter as Product;
+            if (product != null)
+            {
+                var productDetailsWindow = new ProductDetailsWindow(product);
+                productDetailsWindow.Show();
+            }  
         }
     }
 }

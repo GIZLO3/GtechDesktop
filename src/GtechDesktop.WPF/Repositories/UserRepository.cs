@@ -1,11 +1,6 @@
 ﻿using GtechDesktop.WPF.Models;
 using Microsoft.Data.SqlClient;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 
 namespace GtechDesktop.WPF.Repositories
@@ -31,6 +26,30 @@ namespace GtechDesktop.WPF.Repositories
                     user.IsAdmin = dataReader.GetBoolean(6);
                 }
             }  
+            App.Connection.Close();
+
+            return user;
+        }
+
+        public static User GetUser(int Id)
+        {
+            App.Connection.Open();
+            var getCommand = new SqlCommand("SELECT * FROM [gtech].[dbo].[user] WHERE UserId=@UserId", App.Connection);
+            getCommand.Parameters.AddWithValue("@UserId", Id);
+            var user = new User();
+            using (var dataReader = getCommand.ExecuteReader())
+            {
+                while (dataReader.Read())
+                {
+                    user.Id = dataReader.GetInt32(0);
+                    user.Login = Regex.Replace(dataReader.GetString(1), @"\s+", "");
+                    user.Username = Regex.Replace(dataReader.GetString(2), @"\s+", "");
+                    user.Password = Regex.Replace(dataReader.GetString(3), @"\s+", "");
+                    user.Salt = (byte[])dataReader["Salt"];
+                    user.Email = Regex.Replace(dataReader.GetString(5), @"\s+", "");
+                    user.IsAdmin = dataReader.GetBoolean(6);
+                }
+            }
             App.Connection.Close();
 
             return user;

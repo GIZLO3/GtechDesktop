@@ -43,7 +43,7 @@
                         </Grid.RowDefinitions>
 
                         <StackPanel Grid.Row="0">
-                            <Label x:Name="Name" FontSize="24"/>
+                            <Label x:Name="ProductName" FontSize="24"/>
                             <Separator/>
 
                             <StackPanel Orientation="Horizontal">

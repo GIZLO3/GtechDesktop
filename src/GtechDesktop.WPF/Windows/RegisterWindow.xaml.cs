@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.ComponentModel.DataAnnotations;
 using GtechDesktop.WPF.Repositories;
 using GtechDesktop.WPF.Models;
@@ -28,10 +17,10 @@ namespace GtechDesktop.WPF.Windows
             InitializeComponent();
         }
 
-        private void RegisterButtonClick(object sender, RoutedEventArgs e)
+        private void RegisterButtonClick(object sender, RoutedEventArgs e)//rejestracja
         {
             var success = true;
-
+            
             if(string.IsNullOrWhiteSpace(LoginTxt.Text) || string.IsNullOrWhiteSpace(EmailTxt.Text) || string.IsNullOrWhiteSpace(PasswordTxt.Password) || string.IsNullOrWhiteSpace(Password2Txt.Password))
             {
                 success = false;
@@ -60,7 +49,7 @@ namespace GtechDesktop.WPF.Windows
                     MessageBox.Show("Adres email jest niepoprawny!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
-                var storedUser = UserRepository.GetUser(LoginTxt.Text);
+                var storedUser = UserRepository.GetUser(LoginTxt.Text);//sprawdzanie czy podany login już istnieje
                 if(storedUser.Login != null)
                 {
                     success = false;
@@ -68,7 +57,7 @@ namespace GtechDesktop.WPF.Windows
                 }
             }
 
-            if(success)
+            if(success)//dodanie do bazy uzytkownika i powrót do okna logowania
             {
                 var user = new User();
                 user.Login = LoginTxt.Text;
