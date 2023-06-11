@@ -5,11 +5,16 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Images\gtechLogo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Images\g-tech_logo.png" />
     <None Remove="UserControls\g-tech_logo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\gtechLogo.ico" />
   </ItemGroup>
 
   <ItemGroup>
